@@ -2,37 +2,18 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const bookRouter = express.Router();
+const bookRouter = require('./Routes/bookRoutes');
 
 const db = mongoose.connect('mongodb://localhost/bookAPI');
-const Book = require('./models/bookModel');
 
-bookRouter.route('/Books')
-  .get((req, res) => {
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-    let query = {};
-    if(req.query.genre) {
-      query.genre = req.query.genre;
-    }
 
-    Book.find(query, (err, books) => {
-      if (err) res.status(500).send(err);
-
-      res.json(books);
-    });
-  });
-
-bookRouter.route('/Books/:bookId')
-  .get((req, res) => {
-    Book.findById(req.params.bookId, (err, book) => {
-      if (err) res.status(500).send(err);
-
-      res.json(book);
-    });
-  });
 
 app.use('/api', bookRouter);
 
@@ -41,5 +22,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log('Running on port: ' + port);
+  console.log('Running on: ' + port);
 });
