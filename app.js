@@ -17,8 +17,9 @@ if(process.env.ENV = 'Test') {
 }
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 

@@ -1,8 +1,10 @@
 const bookController = (Book) => {
   const post = (req, res) => {
     let book = new Book(req.body);
+    console.log(req);
 
     if(!req.body.title) {
+      console.log('poop');
       res.status(400);
       res.send('Title is required')
     } else {

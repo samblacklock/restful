@@ -9,19 +9,21 @@ const agent = request.agent(app);
 describe('Book Crud Test', function() {
   it('should allow a book to be posted and return a read and _id', function(done) {
     let bookPost = {
-      title: 'test book',
-      author: 'test author',
-      genres: 'fiction'
+      'author': 'test author',
+      'title': 'test book',
+      'genre': 'fiction'
     }
 
     agent.post('/api/books')
       .send(bookPost)
       .expect(200)
       .end(function(err, results) {
-        results.body.read.should.equal(false);
-        results.body.should.have.property('_id');
-
-        done();
+        if(err) console.log(err)
+        else {
+          results.body.read.should.equal(false);
+          results.body.should.have.property('_id');
+          done(err);
+        }
       })
   });
 
