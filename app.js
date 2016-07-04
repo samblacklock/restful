@@ -8,7 +8,14 @@ const app = express();
 const port = process.env.PORT || 3000;
 const bookRouter = require('./Routes/bookRoutes');
 
-const db = mongoose.connect('mongodb://localhost/bookAPI');
+let db;
+
+if(process.env.ENV = 'Test') {
+  db = mongoose.connect('mongodb://localhost/bookAPI_test');
+} else {
+  db = mongoose.connect('mongodb://localhost/bookAPI');
+}
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,3 +31,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log('Running on: ' + port);
 });
+
+module.exports = app;
